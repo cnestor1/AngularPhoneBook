@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services//in-memory-data.service';
 import { RecordsComponent } from './components/records/records.component';
+import { SuiModule } from 'ng2-semantic-ui';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { RecordsComponent } from './components/records/records.component';
     HeaderComponent,
     FooterComponent,
     ContentComponent,
-    RecordsComponent
+    RecordsComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,8 @@ import { RecordsComponent } from './components/records/records.component';
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false })
+      InMemoryDataService, { dataEncapsulation: false }),
+    SuiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
