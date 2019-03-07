@@ -1,0 +1,7 @@
+<ul >
+    <li *ngFor="let record of records">
+        <a routerLink="/detail/{{record.id}}">
+          <span >{{record.id}}</span> {{record.name}}
+        </a>
+      </li>
+</ul>
