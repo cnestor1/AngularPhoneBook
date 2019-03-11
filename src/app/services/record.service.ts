@@ -1,21 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Record } from '../model/record';
-import { MessageService } from '../services/message.service';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { catchError, map, tap } from "rxjs/operators";
+import { Record } from "../model/record";
+import { MessageService } from "../services/message.service";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ "Content-Type": "application/json" })
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class RecordService {
 
-  private recordsUrl = 'api/records';
+  private recordsUrl = "api/records";
+  private selectedRecord: Record;
 
   constructor(
     private http: HttpClient,
@@ -23,12 +24,12 @@ export class RecordService {
 
   getRecords(): Observable<Record[]> {
     // TODO: send the message _after_ fetching the Recordes
-    // this.messageService.add('RecordService: fetched Recordes');
+    // this.messageService.add("RecordService: fetched Recordes");
     // return of(RecordES);
     return this.http.get<Record[]>(this.recordsUrl)
       .pipe(
-        tap(_ => this.log('fetched Recordes')),
-        catchError(this.handleError('getRecords', []))
+        tap(_ => this.log("fetched Recordes")),
+        catchError(this.handleError("getRecords", []))
       );
   }
 
@@ -44,7 +45,7 @@ export class RecordService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -56,5 +57,13 @@ export class RecordService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  setSelectedRecord(record: Record): void {
+    this.selectedRecord = record;
+  }
+
+  getSelectedRecord(): Record {
+    return this.selectedRecord;
   }
 }

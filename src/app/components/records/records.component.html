@@ -1,7 +1,14 @@
-<ul >
+<!-- <ul >
     <li *ngFor="let record of records">
         <a routerLink="/detail/{{record.id}}">
           <span >{{record.id}}</span> {{record.name}}
         </a>
       </li>
-</ul>
+</ul> -->
+<div>
+    <ag-grid-angular #agGrid class="ag-theme-material" style="width: 100%;" [rowData]="records" [columnDefs]="columnDefs" rowSelection='single'  
+   
+    (gridReady)="onGridReady($event)"
+    (rowSelected)="onRowSelected($event)">
+    </ag-grid-angular>
+</div>
