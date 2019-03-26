@@ -1,0 +1,3 @@
+"scripts": [
+    "../node_modules/systemjs/dist/system.src.js"
+],
