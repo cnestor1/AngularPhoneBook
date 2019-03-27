@@ -5,7 +5,8 @@ import { Record } from "../../model/record";
 import {Observable} from 'rxjs';
 import { from } from 'rxjs';
 
-declare var System:any;
+// declare const SystemJS:any;
+declare const SystemJS;
 
 @Component({
   selector: "app-detail",
@@ -34,8 +35,9 @@ export class DetailComponent implements OnInit {
 
   ngAfterViewInit(){
     
+    // const url = 'remote/a.module.js';
     const url = 'https://gist.githubusercontent.com/dianadujing/a7bbbf191349182e1d459286dba0282f/raw/c23281f8c5fabb10ab9d144489316919e4233d11/app.module.ts';
-    console.log(System.import(url));
+    console.log("url: " +SystemJS.import(url));
 
     //emit result of promise
 // const promiseSource = from(System.import(url));
@@ -43,24 +45,24 @@ export class DetailComponent implements OnInit {
 // const subscribe = promiseSource.subscribe(val => console.log(val));
     
     // const importer = (url:any) => Observable.from(System.import(url));
-    // const importer = (url:any) => from(System.import(url));
-    // console.log('importer:', importer);
-    // importer(url)
-    //   .subscribe((modules) => {
-    //     console.log('modules:', modules, modules['AppModule']);
-    //     this.cfr = this.compiler.compileModuleAndAllComponentsSync(modules['AppModule']);
-    //     console.log(this.cfr,',', this.cfr.componentFactories[0]);
-    //     this.putStuffHere.createComponent(this.cfr.componentFactories[0], 0);
-    //   });
+    const importer = (url:any) => from(SystemJS.import(url));
+    console.log('importer:', importer);
+    importer(url)
+      .subscribe((modules) => {
+        console.log('modules:', modules, modules['AppModule']);
+        this.cfr = this.compiler.compileModuleAndAllComponentsSync(modules['AppModule']);
+        console.log(this.cfr,',', this.cfr.componentFactories[0]);
+        this.putStuffHere.createComponent(this.cfr.componentFactories[0], 0);
+      });
     
-      System.import(url).then((module) => {
-        const moduleFactory = this.compiler.compileModuleSync(module.default);
-        const moduleRef = moduleFactory.create(this.injector);
-        const widgets = moduleRef.injector.get('widgets');
-        const resolver = moduleRef.componentFactoryResolver;
-        const componentFactory = resolver.resolveComponentFactory(widgets[0][0].component);
-        this.putStuffHere.createComponent(componentFactory);
-    })
+    //   System.import(url).then((module) => {
+    //     const moduleFactory = this.compiler.compileModuleSync(module.default);
+    //     const moduleRef = moduleFactory.create(this.injector);
+    //     const widgets = moduleRef.injector.get('widgets');
+    //     const resolver = moduleRef.componentFactoryResolver;
+    //     const componentFactory = resolver.resolveComponentFactory(widgets[0][0].component);
+    //     this.putStuffHere.createComponent(componentFactory);
+    // })
   }
 
 }

@@ -29,7 +29,8 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": [],
+            "scripts": ["node_modules/systemjs/dist/system.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -136,5 +137,6 @@
       }
     }
   },
+ 
   "defaultProject": "phonebook"
 }
